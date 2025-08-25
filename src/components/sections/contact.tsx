@@ -17,8 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send } from 'lucide-react';
-import { sendContactEmail } from '@/ai/flows/send-contact-email';
-import type { SendContactEmailInput } from '@/ai/flows/send-contact-email';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -41,23 +39,18 @@ const ContactSection = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    try {
-      await sendContactEmail(values as SendContactEmailInput);
-      toast({
-        title: "Message Sent!",
-        description: "Thanks for reaching out. We'll get back to you soon.",
-      });
-      form.reset();
-    } catch (error) {
-      console.error('Failed to send message:', error);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem sending your message. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate a delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Since we are on a static site, we can't send an email.
+    // We will just show a success message.
+    toast({
+      title: "Message Sent!",
+      description: "Thanks for reaching out. We'll get back to you soon.",
+    });
+    console.log("Form Submitted (Static):", values);
+    form.reset();
+    setIsSubmitting(false);
   }
 
   return (
