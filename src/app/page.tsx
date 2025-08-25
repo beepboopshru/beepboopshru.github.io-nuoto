@@ -6,7 +6,7 @@ import ContactSection from '@/components/sections/contact';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-black">
+    <div className="flex min-h-screen flex-col bg-[radial-gradient(ellipse_at_center,hsl(var(--background-start)),hsl(var(--background-end)))]">
       <Header />
       <main className="flex-grow">
         <HeroSection />

@@ -46,7 +46,7 @@ const ContactSection = () => {
   }
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-background">
+    <section id="contact" className="py-20 md:py-28 bg-transparent">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Get In Touch</h2>
@@ -64,7 +64,7 @@ const ContactSection = () => {
                   <FormItem>
                     <FormLabel className="text-lg">Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Name" {...field} className="py-6 text-base"/>
+                      <Input placeholder="Your Name" {...field} className="py-6 text-base bg-card/50"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -77,7 +77,7 @@ const ContactSection = () => {
                   <FormItem>
                     <FormLabel className="text-lg">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="your.email@example.com" {...field} className="py-6 text-base"/>
+                      <Input placeholder="your.email@example.com" {...field} className="py-6 text-base bg-card/50"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -90,7 +90,7 @@ const ContactSection = () => {
                   <FormItem>
                     <FormLabel className="text-lg">Message</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Tell us about your project..." {...field} rows={6} className="text-base"/>
+                      <Textarea placeholder="Tell us about your project..." {...field} rows={6} className="text-base bg-card/50"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

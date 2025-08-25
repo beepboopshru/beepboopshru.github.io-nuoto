@@ -14,7 +14,7 @@ import {
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="relative overflow-hidden py-24 md:py-32 lg:py-40 bg-grid-pattern">
+    <section id="hero" className="relative overflow-hidden py-24 md:py-32 lg:py-40">
       <div className="container mx-auto text-center flex flex-col items-center">
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-blue-600 animate-shine">
           nuoto

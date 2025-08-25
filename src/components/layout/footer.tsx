@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 
 const Footer = () => {
   return (
-    <footer className="w-full py-8 bg-background border-t border-border/40">
+    <footer className="w-full py-8 bg-transparent border-t border-border/40">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         <p className="text-muted-foreground text-sm mb-4 md:mb-0">
           © {new Date().getFullYear()} Nuoto Digital Showcase. All rights reserved.
