@@ -9,6 +9,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
+import nodemailer from 'nodemailer';
 
 const SendContactEmailInputSchema = z.object({
   name: z.string().describe("The sender's name."),
@@ -28,28 +29,43 @@ const sendContactEmailFlow = ai.defineFlow(
     outputSchema: z.object({ success: z.boolean() }),
   },
   async (input) => {
-    console.log(`Received contact form submission:`, input);
-    
-    // In a real application, you would integrate with an email service like
-    // SendGrid, Mailgun, or AWS SES here. This example will just log the
-    // data to the console and simulate a successful response.
-    
-    const mailOptions = {
-        from: input.email,
-        to: 'nuoto.ai@gmail.com',
-        subject: `New Contact Form Submission from ${input.name}`,
-        text: input.message,
-    };
-    
-    console.log('Simulating sending email with options:', mailOptions);
+    try {
+      // Create a transporter object using SMTP transport.
+      // You need to configure this with your email provider's details.
+      // These details are stored securely in environment variables.
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: Number(process.env.EMAIL_PORT),
+        secure: Number(process.env.EMAIL_PORT) === 465, // true for 465, false for other ports
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
-    // Replace the following lines with your actual email sending logic.
-    // For example, using a library like 'nodemailer':
-    //
-    // import nodemailer from 'nodemailer';
-    // const transporter = nodemailer.createTransport({ ... });
-    // await transporter.sendMail(mailOptions);
+      // Define the email options.
+      const mailOptions = {
+        from: `"${input.name}" <${input.email}>`, // sender address
+        to: 'nuoto.ai@gmail.com', // list of receivers
+        subject: `New Contact Form Submission from ${input.name}`, // Subject line
+        text: input.message, // plain text body
+        html: `<p>You have a new contact form submission from:</p>
+               <p><strong>Name:</strong> ${input.name}</p>
+               <p><strong>Email:</strong> ${input.email}</p>
+               <p><strong>Message:</strong></p>
+               <p>${input.message}</p>`, // html body
+      };
+      
+      // Send the email.
+      await transporter.sendMail(mailOptions);
+      console.log('Email sent successfully');
 
-    return { success: true };
+      return { success: true };
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      // So the user-facing form doesn't break, we'll return success,
+      // but in a real app you might want to handle this failure differently.
+      return { success: false };
+    }
   }
 );
