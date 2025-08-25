@@ -38,13 +38,19 @@ const prompt = ai.definePrompt({
   Do not include the agency name in the taglines themselves.
   The agency specializes in AI Solutions, Web Development, and Creative Services.
   In addition, the taglines should be related to the following keywords: {{keywords}}.
-  Return the taglines as a numbered list.
+  
+  Return the taglines as a JSON object with a key "taglines" containing an array of strings. For example:
+  {
+    "taglines": [
+      "Tagline 1",
+      "Tagline 2",
+      "Tagline 3"
+    ]
+  }
 
   Make the taglines cutting-edge, futuristic, and trustworthy. Use modern sans-serif, geometric, and clean typography.
   The primary color is vibrant aqua (#7FFFD4), the background color is deep navy (#191970), and the accent color is neon blue (#19FFFF).
   The layout is spacious and grid-based with smooth transitions and subtle animations.
-
-  Taglines:
   `,
 });
 
@@ -56,8 +62,16 @@ const generateTaglinesFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    // Split the output into individual taglines
-    const taglines = output!.taglines;
-    return {taglines: taglines!};
+    if (!output || !output.taglines || output.taglines.length === 0) {
+      // Fallback taglines
+      return {
+        taglines: [
+          "Engineering Tomorrow's Web.",
+          "Where Ideas Meet Intelligence.",
+          "Creative Code, Intelligent Design.",
+        ],
+      };
+    }
+    return {taglines: output.taglines};
   }
 );
