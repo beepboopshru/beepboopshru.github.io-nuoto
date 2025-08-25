@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Nuoto Digital Showcase',
   description: 'Sleek, modern landing page for the Nuoto digital agency.',
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
 };
 
