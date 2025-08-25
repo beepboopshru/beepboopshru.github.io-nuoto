@@ -2,6 +2,7 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   output: 'export',
+  basePath: '/beepboopshru.github.io-nuoto',
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
