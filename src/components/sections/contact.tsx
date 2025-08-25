@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Send } from 'lucide-react';
+import { sendContactEmail } from '@/ai/flows/send-contact-email';
+import type { SendContactEmailInput } from '@/ai/flows/send-contact-email';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -26,6 +28,7 @@ const formSchema = z.object({
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,13 +39,25 @@ const ContactSection = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. We'll get back to you soon.",
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      await sendContactEmail(values as SendContactEmailInput);
+      toast({
+        title: "Message Sent!",
+        description: "Thanks for reaching out. We'll get back to you soon.",
+      });
+      form.reset();
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem sending your message. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -96,8 +111,8 @@ const ContactSection = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" size="lg" className="w-full text-lg group">
-                Send Message <Send className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <Button type="submit" size="lg" className="w-full text-lg group" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'} <Send className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </form>
           </Form>
