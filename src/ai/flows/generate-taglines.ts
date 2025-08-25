@@ -35,6 +35,7 @@ const prompt = ai.definePrompt({
 
   Generate {{numberOfTaglines}} taglines for the digital agency {{agencyName}}.
   The taglines should be concise, memorable, and relevant to the agency's services.
+  Do not include the agency name in the taglines themselves.
   The agency specializes in AI Solutions, Web Development, and Creative Services.
   In addition, the taglines should be related to the following keywords: {{keywords}}.
   Return the taglines as a numbered list.
