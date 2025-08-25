@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import { ScrollArea } from '../ui/scroll-area';
+import TestimonialRotator from '../testimonial-rotator';
 
 const HeroSection = () => {
   return (
@@ -106,10 +107,7 @@ const HeroSection = () => {
 
                     <div>
                       <h3 className="text-lg font-semibold text-primary">Success Stories</h3>
-                      <blockquote className="mt-2 border-l-2 border-primary pl-4 italic text-foreground/80">
-                        "Nuoto transformed our online presence. Their AI-driven insights and stunning design doubled our engagement in just three months."
-                        <cite className="block not-italic mt-2 font-semibold">- Alex Johnson, CEO of InnovateCorp</cite>
-                      </blockquote>
+                      <TestimonialRotator />
                     </div>
                   </div>
                 </ScrollArea>
